@@ -56,6 +56,16 @@
             value = "d66694202a894f08beb2e415a43636f8"
             isEnabled = "YES">
          </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "SPOTIFY_CLIENT_SECRET"
+            value = "e3f869a96dc1401ea796d8ef309ceaca"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "IDEPreferLogStreaming"
+            value = "YES"
+            isEnabled = "YES">
+         </EnvironmentVariable>
       </EnvironmentVariables>
    </LaunchAction>
    <ProfileAction

@@ -13,6 +13,10 @@
 		3D4E76CB2C4854760072AF5C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D4E76CA2C4854760072AF5C /* Preview Assets.xcassets */; };
 		3D4E76D32C4857620072AF5C /* SpotifyiOS in Frameworks */ = {isa = PBXBuildFile; productRef = 3D4E76D22C4857620072AF5C /* SpotifyiOS */; };
 		3D4E76DA2C4920C80072AF5C /* SpotifyAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4E76D92C4920C80072AF5C /* SpotifyAuthManager.swift */; };
+		3D4E76DE2C49275C0072AF5C /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4E76DD2C49275C0072AF5C /* Playlist.swift */; };
+		3D4E76E12C49287E0072AF5C /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4E76E02C49287E0072AF5C /* Logger.swift */; };
+		3D4E76E52C49555D0072AF5C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4E76E42C49555D0072AF5C /* AppDelegate.swift */; };
+		3D4E76E72C496C410072AF5C /* Info.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4E76E62C496C410072AF5C /* Info.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +29,10 @@
 		3D4E76D42C48577F0072AF5C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		3D4E76D52C48591B0072AF5C /* SpotifyPM-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SpotifyPM-Bridging-Header.h"; sourceTree = "<group>"; };
 		3D4E76D92C4920C80072AF5C /* SpotifyAuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyAuthManager.swift; sourceTree = "<group>"; };
+		3D4E76DD2C49275C0072AF5C /* Playlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
+		3D4E76E02C49287E0072AF5C /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		3D4E76E42C49555D0072AF5C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		3D4E76E62C496C410072AF5C /* Info.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Info.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,8 +68,10 @@
 			children = (
 				3D4E76D42C48577F0072AF5C /* Info.plist */,
 				3D4E76C22C4854750072AF5C /* SpotifyPlaylistManagerApp.swift */,
+				3D4E76E42C49555D0072AF5C /* AppDelegate.swift */,
 				3D4E76D72C4920900072AF5C /* Bridge */,
 				3D4E76DC2C49265C0072AF5C /* Data */,
+				3D4E76DF2C4928600072AF5C /* Logger */,
 				3D4E76D62C4920890072AF5C /* Managers */,
 				3D4E76D82C49209D0072AF5C /* Views */,
 				3D4E76C62C4854760072AF5C /* Assets.xcassets */,
@@ -99,6 +109,7 @@
 			isa = PBXGroup;
 			children = (
 				3D4E76C42C4854750072AF5C /* ContentView.swift */,
+				3D4E76E62C496C410072AF5C /* Info.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -106,8 +117,17 @@
 		3D4E76DC2C49265C0072AF5C /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				3D4E76DD2C49275C0072AF5C /* Playlist.swift */,
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		3D4E76DF2C4928600072AF5C /* Logger */ = {
+			isa = PBXGroup;
+			children = (
+				3D4E76E02C49287E0072AF5C /* Logger.swift */,
+			);
+			path = Logger;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -186,9 +206,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D4E76E12C49287E0072AF5C /* Logger.swift in Sources */,
 				3D4E76DA2C4920C80072AF5C /* SpotifyAuthManager.swift in Sources */,
 				3D4E76C52C4854750072AF5C /* ContentView.swift in Sources */,
+				3D4E76E52C49555D0072AF5C /* AppDelegate.swift in Sources */,
 				3D4E76C32C4854750072AF5C /* SpotifyPlaylistManagerApp.swift in Sources */,
+				3D4E76DE2C49275C0072AF5C /* Playlist.swift in Sources */,
+				3D4E76E72C496C410072AF5C /* Info.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
