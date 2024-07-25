@@ -14,10 +14,20 @@ struct ConnectWithSptView: View {
     var body: some View {
         VStack {
             if viewModel.isConnected {
-                Text("Connected to Spotify")
+                SptPlaylistView()
             } else {
                 Button("Connect") {
                     viewModel.connectToSpotify()
+                }
+            }
+        }
+        .sheet(isPresented: $viewModel.showWebView) {
+            if let authURL = viewModel.authURL {
+                NavigationStack {
+                    WebView(url: authURL, showWebView: $viewModel.showWebView, vm: viewModel)
+                        .ignoresSafeArea()
+                        .navigationTitle("Login to spotify")
+                        .navigationBarTitleDisplayMode(.inline)
                 }
             }
         }

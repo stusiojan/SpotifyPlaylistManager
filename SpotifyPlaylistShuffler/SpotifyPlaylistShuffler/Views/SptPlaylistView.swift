@@ -17,8 +17,10 @@ struct SptPlaylistView: View {
                 Text(playlist.name)
             }
         }
+        .navigationTitle("Playlists")
         .onAppear {
             viewModel.fetchPlaylists()
+            print("dupa")
         }
     }
 }

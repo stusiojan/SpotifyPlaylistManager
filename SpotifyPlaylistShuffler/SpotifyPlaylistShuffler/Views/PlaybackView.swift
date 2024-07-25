@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
 /// View for playback controls
 struct PlaybackView: View {
     let song: Song
