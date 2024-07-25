@@ -18,14 +18,14 @@ struct PlaybackView: View {
                 .font(.largeTitle)
                 .padding()
             
-            AsyncImage(url: URL(string: song.albumCoverUrl))
+            AsyncImage(url: URL(string: song.album.images?.first?.url ?? ""))
                 .aspectRatio(contentMode: .fit)
                 .frame(maxWidth: .infinity, maxHeight: 300)
             
-            Text(song.artist)
-                .font(.title2)
-            Text(song.album)
-                .font(.title3)
+//            Text(song.artist)
+//                .font(.title2)
+//            Text(song.album)
+//                .font(.title3)
             
             HStack {
                 Button(action: viewModel.previous) {

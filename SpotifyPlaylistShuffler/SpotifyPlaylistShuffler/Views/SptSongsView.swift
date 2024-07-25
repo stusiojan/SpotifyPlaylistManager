@@ -32,6 +32,7 @@ struct SptSongsView: View {
             }
         }
         .onAppear {
+            Logger.shared.log("Playlist id: \(playlist.id)")
             viewModel.fetchSongs(for: playlist.id)
         }
     }

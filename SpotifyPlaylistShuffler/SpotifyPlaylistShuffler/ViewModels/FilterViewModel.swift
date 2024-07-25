@@ -13,7 +13,7 @@ class FilterViewModel: ObservableObject {
     
     func filterSongs(_ songs: [Song], by criteria: String) -> [Song] {
         // Implement filtering logic based on criteria
-        return songs.filter { $0.artist.contains(criteria) }
+        return songs.filter { $0.durationMs > 300 }
     }
 }
 

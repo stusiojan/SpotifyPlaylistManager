@@ -80,42 +80,114 @@ class SpotifyService {
     }
     
     func fetchUserPlaylists(completion: @escaping ([Playlist]) -> Void) {
-        guard let accessToken = UserDefaults.standard.value(forKey: "Authorization") else {
+        guard let accessToken = UserDefaults.standard.value(forKey: "Authorization") as? String else {
             Logger.shared.log("Access token not available", level: .error)
             completion([])
             return
         }
+
+        Logger.shared.log("Bearer \(accessToken)")
+        Logger.shared.log("Requesting playlists...")
         
-        var request = URLRequest(url: URL(string: "https://\(apiHost)/v1/me/playlists")!)
-            request.httpMethod = "GET"
-            request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-            
-            let task = URLSession.shared.dataTask(with: request) { data, response, error in
-//                guard error == nil else {
-//                    Logger.shared.log("Error fetching playlists: \(error!.localizedDescription)", level: .error)
-//                    completion([])
-//                    return
-//                }
-//                
-//                guard let data = data else {
-//                    Logger.shared.log("No data received", level: .error)
-//                    completion([])
-//                    return
-//                }
-//                
-//                do {
-//                    let playlistsResponse = try JSONDecoder().decode(PlaylistsResponse.self, from: data)
-//                    completion(playlistsResponse.items)
-//                } catch {
-//                    Logger.shared.log("Error decoding playlists: \(error.localizedDescription)", level: .error)
-//                    completion([])
-//                }
+        var request = URLRequest(url: URL(string: "https://api.spotify.com/v1/me/playlists")!)
+        request.httpMethod = "GET"
+        request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data else {
+                Logger.shared.log("Failed to fetch playlists: \(error?.localizedDescription ?? "Unknown error")", level: .error)
+                completion([])
+                return
             }
             
-            task.resume()
-        }
-    
-    func fetchSongs(for playlistId: String, completion: @escaping ([Song]) -> Void) {
-        // Implement network request to fetch songs in a playlist
+            // Log raw JSON data for debugging
+            if let jsonString = String(data: data, encoding: .utf8) {
+                Logger.shared.log("Received JSON: \(jsonString)", level: .info)
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                let playlistsResponse = try decoder.decode(PlaylistsResponse.self, from: data)
+                completion(playlistsResponse.items)
+            } catch {
+                Logger.shared.log("Failed to decode playlists: \(error.localizedDescription)", level: .error)
+                if let decodingError = error as? DecodingError {
+                    switch decodingError {
+                    case .dataCorrupted(let context):
+                        Logger.shared.log("Data corrupted: \(context.debugDescription)", level: .error)
+                    case .keyNotFound(let key, let context):
+                        Logger.shared.log("Key not found: \(key.stringValue) in \(context.debugDescription)", level: .error)
+                    case .typeMismatch(let type, let context):
+                        Logger.shared.log("Type mismatch: \(type) in \(context.debugDescription)", level: .error)
+                    case .valueNotFound(let type, let context):
+                        Logger.shared.log("Value not found: \(type) in \(context.debugDescription)", level: .error)
+                    @unknown default:
+                        Logger.shared.log("Unknown decoding error", level: .error)
+                    }
+                }
+                completion([])
+            }
+        }.resume()
     }
+
+
+    func fetchSongs(for playlistId: String, completion: @escaping ([Song]) -> Void) {
+        guard let accessToken = UserDefaults.standard.value(forKey: "Authorization") as? String else {
+            Logger.shared.log("Access token not available", level: .error)
+            completion([])
+            return
+        }
+
+//        Logger.shared.log("Bearer \(accessToken)")
+//        Logger.shared.log("Requesting songs for playlist: \(playlistId)...")
+
+        let urlString = "https://api.spotify.com/v1/playlists/\(playlistId)/tracks"
+        guard let url = URL(string: urlString) else {
+            Logger.shared.log("Invalid URL: \(urlString)", level: .error)
+            completion([])
+            return
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data else {
+                Logger.shared.log("Failed to fetch songs: \(error?.localizedDescription ?? "Unknown error")", level: .error)
+                completion([])
+                return
+            }
+
+            // Log raw JSON data for debugging
+            if let jsonString = String(data: data, encoding: .utf8) {
+                Logger.shared.log("Received JSON: \(jsonString)", level: .info)
+            }
+
+            do {
+                let decoder = JSONDecoder()
+                let tracksResponse = try decoder.decode(TracksResponse.self, from: data)
+                let songs = tracksResponse.items.map { $0.track }
+                completion(songs)
+            } catch {
+                Logger.shared.log("Failed to decode songs: \(error.localizedDescription)", level: .error)
+                if let decodingError = error as? DecodingError {
+                    switch decodingError {
+                    case .dataCorrupted(let context):
+                        Logger.shared.log("Data corrupted: \(context.debugDescription)", level: .error)
+                    case .keyNotFound(let key, let context):
+                        Logger.shared.log("Key not found: \(key.stringValue) in \(context.debugDescription)", level: .error)
+                    case .typeMismatch(let type, let context):
+                        Logger.shared.log("Type mismatch: \(type) in \(context.debugDescription)", level: .error)
+                    case .valueNotFound(let type, let context):
+                        Logger.shared.log("Value not found: \(type) in \(context.debugDescription)", level: .error)
+                    @unknown default:
+                        Logger.shared.log("Unknown decoding error", level: .error)
+                    }
+                }
+                completion([])
+            }
+        }.resume()
+    }
+
 }
