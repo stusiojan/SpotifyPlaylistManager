@@ -5,14 +5,20 @@
 //  Created by Jan Stusio on 24/07/2024.
 //
 
-import Combine
+import Foundation
+import Observation
 
 /// Manages songs data within a playlist
-class SptSongsViewModel: ObservableObject {
-    @Published var songs: [Song] = []
+@Observable
+class SptSongsViewModel {
+    var songs: [Song] = []
     
     func fetchSongs(for playlistId: String) {
-        // Implement logic to fetch songs from a specific playlist
+        SpotifyService.shared.fetchSongs(for: playlistId) { [weak self] songs in
+            DispatchQueue.main.async {
+                self?.songs = songs
+            }
+        }
     }
 }
 

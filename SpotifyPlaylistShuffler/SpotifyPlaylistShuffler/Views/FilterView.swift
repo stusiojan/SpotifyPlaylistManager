@@ -10,6 +10,8 @@ import SwiftUI
 /// View for filtering songs
 struct FilterView: View {
     @ObservedObject var viewModel: FilterViewModel
+//    @Environment(SptSongsViewModel.self) private var vm
+    @Binding var songs: [Song]
     
     var body: some View {
         VStack {
@@ -17,8 +19,8 @@ struct FilterView: View {
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
             
-            Button("Apply Filter") {
-                // Implement filter application logic
+            Button("Sort by popularity") {
+                songs = viewModel.filterSongs(songs)
             }
             
             Spacer()

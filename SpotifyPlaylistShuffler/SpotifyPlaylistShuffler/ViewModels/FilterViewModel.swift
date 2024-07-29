@@ -11,9 +11,9 @@ import Combine
 class FilterViewModel: ObservableObject {
     @Published var filterCriteria: String = ""
     
-    func filterSongs(_ songs: [Song], by criteria: String) -> [Song] {
+    func filterSongs(_ songs: [Song]) -> [Song] {
         // Implement filtering logic based on criteria
-        return songs.filter { $0.durationMs > 300 }
+        return songs.sorted(by: { $0.track.popularity > $1.track.popularity })
     }
 }
 

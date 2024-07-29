@@ -6,18 +6,19 @@
 //
 
 import SwiftUI
+import Observation
 
 /// View for displaying songs in a playlist
 struct SptSongsView: View {
     let playlist: Playlist
-    @StateObject var viewModel = SptSongsViewModel()
+    @Bindable var viewModel = SptSongsViewModel()
     @State private var showingFilter = false
     
     var body: some View {
         VStack {
             List(viewModel.songs) { song in
                 NavigationLink(destination: PlaybackView(song: song)) {
-                    Text(song.name)
+                    Text(song.track.name)
                 }
             }
             .toolbar {
@@ -28,12 +29,13 @@ struct SptSongsView: View {
                 }
             }
             .sheet(isPresented: $showingFilter) {
-                FilterView(viewModel: FilterViewModel())
+                FilterView(viewModel: FilterViewModel(), songs: $viewModel.songs)
             }
         }
         .onAppear {
             Logger.shared.log("Playlist id: \(playlist.id)")
             viewModel.fetchSongs(for: playlist.id)
+            Logger.shared.log("Songs requested.")
         }
     }
 }

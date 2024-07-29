@@ -14,11 +14,11 @@ struct PlaybackView: View {
     
     var body: some View {
         VStack {
-            Text(song.name)
+            Text(song.track.name)
                 .font(.largeTitle)
                 .padding()
             
-            AsyncImage(url: URL(string: song.album.images?.first?.url ?? ""))
+            AsyncImage(url: URL(string: song.track.album.images.first?.url ?? ""))
                 .aspectRatio(contentMode: .fit)
                 .frame(maxWidth: .infinity, maxHeight: 300)
             
