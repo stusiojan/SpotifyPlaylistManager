@@ -16,11 +16,11 @@ struct SptPlaylistView: View {
             NavigationLink(destination: SptSongsView(playlist: playlist)) {
                 Text(playlist.name)
             }
+//            viewModel
         }
         .navigationTitle("Playlists")
         .onAppear {
             viewModel.fetchPlaylists()
-            print("dupa")
         }
     }
 }

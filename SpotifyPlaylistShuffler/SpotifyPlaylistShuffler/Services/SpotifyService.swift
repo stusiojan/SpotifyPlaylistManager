@@ -85,9 +85,6 @@ class SpotifyService {
             completion([])
             return
         }
-
-//        Logger.shared.log("Bearer \(accessToken)")
-//        Logger.shared.log("Requesting playlists...")
         
         var request = URLRequest(url: URL(string: "https://\(apiHost)/v1/me/playlists")!)
         request.httpMethod = "GET"
@@ -99,11 +96,6 @@ class SpotifyService {
                 completion([])
                 return
             }
-            
-            // Log raw JSON data for debugging
-//            if let jsonString = String(data: data, encoding: .utf8) {
-//                Logger.shared.log("Received JSON: \(jsonString)", level: .info)
-//            }
             
             do {
                 let decoder = JSONDecoder()
@@ -138,17 +130,13 @@ class SpotifyService {
             return
         }
 
-//        Logger.shared.log("Bearer \(accessToken)")
-        Logger.shared.log("Requesting songs for playlist with playlistId: \(playlistId)...")
-
         let urlString = "https://\(apiHost)/v1/playlists/\(playlistId)/tracks"
-        print("jestem tu 2" + urlString)
         guard let url = URL(string: urlString) else {
             Logger.shared.log("Invalid URL: \(urlString)", level: .error)
             completion([])
             return
         }
-        print("jestem tu 3")
+        
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
@@ -158,12 +146,6 @@ class SpotifyService {
                 Logger.shared.log("Failed to fetch songs: \(error?.localizedDescription ?? "Unknown error")", level: .error)
                 completion([])
                 return
-            }
-
-            print("jestem tu 1")
-            // Log raw JSON data for debugging
-            if let jsonString = String(data: data, encoding: .utf8) {
-                Logger.shared.log("Received JSON with songs: \(jsonString)", level: .info)
             }
 
             do {

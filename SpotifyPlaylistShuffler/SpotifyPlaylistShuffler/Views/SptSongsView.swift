@@ -32,10 +32,9 @@ struct SptSongsView: View {
                 FilterView(viewModel: FilterViewModel(), songs: $viewModel.songs)
             }
         }
+        .navigationTitle(playlist.name)
         .onAppear {
-            Logger.shared.log("Playlist id: \(playlist.id)")
             viewModel.fetchSongs(for: playlist.id)
-            Logger.shared.log("Songs requested.")
         }
     }
 }
